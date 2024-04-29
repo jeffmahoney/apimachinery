@@ -73,6 +73,10 @@ func (gr GroupResource) String() string {
 	return gr.Resource + "." + gr.Group
 }
 
+func (gr GroupResource) MarshalText() ([]byte, error) {
+       return []byte(gr.String()), nil
+}
+
 func ParseGroupKind(gk string) GroupKind {
 	i := strings.Index(gk, ".")
 	if i == -1 {
@@ -115,6 +119,10 @@ func (gvr GroupVersionResource) String() string {
 	return strings.Join([]string{gvr.Group, "/", gvr.Version, ", Resource=", gvr.Resource}, "")
 }
 
+func (gvr GroupVersionResource) MarshalText() ([]byte, error) {
+       return []byte(gvr.String()), nil
+}
+
 // GroupKind specifies a Group and a Kind, but does not force a version.  This is useful for identifying
 // concepts during lookup stages without having partially valid types
 type GroupKind struct {
@@ -135,6 +143,10 @@ func (gk GroupKind) String() string {
 		return gk.Kind
 	}
 	return gk.Kind + "." + gk.Group
+}
+
+func (gk GroupKind) MarshalText() ([]byte, error) {
+       return []byte(gk.String()), nil
 }
 
 // GroupVersionKind unambiguously identifies a kind.  It doesn't anonymously include GroupVersion
@@ -162,6 +174,10 @@ func (gvk GroupVersionKind) String() string {
 	return gvk.Group + "/" + gvk.Version + ", Kind=" + gvk.Kind
 }
 
+func (gvk GroupVersionKind) MarshalText() ([]byte, error) {
+       return []byte(gvk.String()), nil
+}
+
 // GroupVersion contains the "group" and the "version", which uniquely identifies the API.
 type GroupVersion struct {
 	Group   string
@@ -180,6 +196,10 @@ func (gv GroupVersion) String() string {
 		return gv.Group + "/" + gv.Version
 	}
 	return gv.Version
+}
+
+func (gv GroupVersion) MarshalText() ([]byte, error) {
+       return []byte(gv.String()), nil
 }
 
 // Identifier implements runtime.GroupVersioner interface.
